@@ -25,6 +25,5 @@ test:
   username: blackcard
   password: blackcard1234
 
-# production:
-#   <<: *default
-#   database: blackcard
+production:
+  url: <%= ENV['DATABASE_URL'] %>
