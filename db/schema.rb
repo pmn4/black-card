@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920205912) do
+ActiveRecord::Schema.define(version: 20160921182255) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at",                   null: false
@@ -25,10 +25,23 @@ ActiveRecord::Schema.define(version: 20160920205912) do
   add_index "actions", ["application_id"], name: "index_actions_on_application_id", using: :btree
   add_index "actions", ["user_id"], name: "index_actions_on_user_id", using: :btree
 
-  create_table "applications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "aliases", force: :cascade do |t|
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "key",        limit: 255
+    t.integer  "user_id",    limit: 4
   end
+
+  add_index "aliases", ["key"], name: "index_aliases_on_key", unique: true, using: :btree
+  add_index "aliases", ["user_id"], name: "index_aliases_on_user_id", using: :btree
+
+  create_table "applications", force: :cascade do |t|
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "key",        limit: 255
+  end
+
+  add_index "applications", ["key"], name: "index_applications_on_key", unique: true, using: :btree
 
   create_table "rewards", force: :cascade do |t|
     t.datetime "created_at",                 null: false
@@ -38,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160920205912) do
     t.integer  "application_id", limit: 4
   end
 
+  add_index "rewards", ["application_id", "name"], name: "index_rewards_on_application_id_and_name", unique: true, using: :btree
   add_index "rewards", ["application_id"], name: "index_rewards_on_application_id", using: :btree
 
   create_table "rules", force: :cascade do |t|
@@ -61,6 +75,7 @@ ActiveRecord::Schema.define(version: 20160920205912) do
 
   add_foreign_key "actions", "applications"
   add_foreign_key "actions", "users"
+  add_foreign_key "aliases", "users"
   add_foreign_key "rewards", "applications"
   add_foreign_key "rules", "rewards"
   add_foreign_key "users", "applications"

@@ -3,11 +3,15 @@ RESOURCE_ROUTES = %i(index create show update destroy).freeze
 Rails.application.routes.draw do
   resources :actions, only: :create
 
-  resources :user, only: :none do
-    resources :rewards, only: %i(index show)
+  resources :users, only: :show do
+    resources :alias, only: :create
+
+    resources :rewards, only: %i(index show), controller: 'user_rewards'
   end
 
-  # namespace :admin do
-  #   resources :rules, only: RESOURCE_ROUTES
-  # end
+  # admin
+
+  resources :applications, only: RESOURCE_ROUTES
+  resources :rewards, only: RESOURCE_ROUTES
+  resources :rules, only: RESOURCE_ROUTES
 end
