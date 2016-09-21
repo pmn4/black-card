@@ -1,6 +1,11 @@
 require_relative 'users_controller'
+require_relative '../models/reward'
 
 class UserReward
+  self.application_property = :rewards
+  self.resource_param = :reward
+  self.model_class = Reward
+
   attr_accessor :user, :reward
 
   def initialize(user, reward)

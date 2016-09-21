@@ -49,11 +49,13 @@ class ApplicationController < ActionController::API
   private
 
   def require_application
-    halt(400, 'application_key is required') unless params.key?(:application_key)
+    unless params.key?(:application_key)
+      return render(text: 'application_key is required', status: 400)
+    end
 
     self.application =
       Application.where(key: params[:application_key]).limit(1).first
   rescue => e
-    halt(400, "Unknown Application `#{ params[:application_key] }`")
+    render(text: 'Unknown Application `#{ params[:application_key] }`', status: 400)
   end
 end

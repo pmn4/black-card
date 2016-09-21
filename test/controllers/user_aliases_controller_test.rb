@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AliasesControllerTest < ActionController::TestCase
+class UserAliasesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
