@@ -14,7 +14,7 @@ class UserReward
 
   def as_json(options = {})
     {
-      reward: reward.as_json(options[:reward]),
+      reward: reward.as_json(only: %i(name description)),
       eligible: eligible
     }
   end
