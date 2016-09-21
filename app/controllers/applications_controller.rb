@@ -14,4 +14,10 @@ class ApplicationsController < ApplicationController
   rescue ActiveRecord::RecordNotUnique => e
     render(text: 'Duplicate entry', status: 409)
   end
+
+  private
+
+  def require_application
+    # noop
+  end
 end

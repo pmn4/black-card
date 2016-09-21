@@ -3,4 +3,6 @@ class Application < ActiveRecord::Base
   has_many :rewards
   has_many :rules
   has_many :users
+
+  validates :key, presence: true
 end
