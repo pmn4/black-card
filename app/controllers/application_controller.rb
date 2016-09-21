@@ -10,13 +10,15 @@ class ApplicationController < ActionController::API
   attr_accessor :application
 
   def index
-    resources = application.send(application_property)
+    resources =
+      application.send(application_property)
 
     render(json: resources.as_json)
   end
 
   def create
-    application.send(application_property).create!(resource_params)
+    resource =
+      application.send(application_property).create!(resource_params)
 
     render(json: resource.as_json)
   rescue ActiveRecord::RecordInvalid => e
@@ -26,7 +28,8 @@ class ApplicationController < ActionController::API
   end
 
   def show
-    resource = application.send(application_property).find(params[:id])
+    resource =
+      application.send(application_property).find(params[:id])
 
     render(json: resource.as_json)
   end
