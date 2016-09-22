@@ -7,4 +7,5 @@ class UserAliasesController < UsersController
   self.model_class = Alias
 
   alias_method :create, :subresource_create
+  alias_method :destroy, :subresource_destroy
 end

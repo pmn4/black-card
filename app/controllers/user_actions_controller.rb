@@ -19,4 +19,6 @@ class UserActionsController < UsersController
 
     subresource_create
   end
+
+  alias_method :destroy, :subresource_destroy
 end

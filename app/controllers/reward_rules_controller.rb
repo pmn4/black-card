@@ -7,4 +7,5 @@ class RewardRulesController < RewardsController
   self.model_class = Rule
 
   alias_method :create, :subresource_create
+  alias_method :destroy, :subresource_destroy
 end
