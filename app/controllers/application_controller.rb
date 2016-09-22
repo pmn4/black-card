@@ -34,14 +34,24 @@ class ApplicationController < ActionController::API
     render(json: resource.as_json)
   end
 
-  def destroy
-    self.model_class.destroy(params[:id])
+  def update
+    resource =
+      application.send(application_property)
+        .find(params[:id])
+
+      resource.update!(resource_params)
+
+    render(json: resource.as_json)
+  rescue ActiveRecord::RecordNotFound
+    render(json: 'Not found', status: 404)
+  rescue ActiveRecord::RecordInvalid => e
+    render(json: e.record.errors, status: 400)
+  rescue ActiveRecord::RecordNotUnique => e
+    render(text: 'Duplicate entry', status: 409)
   end
 
-  def subresource_destroy
-    self.model_class.find(params[:reward_id])
-      .send(self.class.application_property)
-      .destroy(params[:id])
+  def destroy
+    self.model_class.destroy(params[:id])
   end
 
   protected
@@ -63,9 +73,6 @@ class ApplicationController < ActionController::API
       return render(text: 'application_key is required', status: 400)
     end
 
-    self.application =
-      Application.where(key: params[:application_key]).limit(1).first
-  rescue => e
-    render(text: 'Unknown Application `#{ params[:application_key] }`', status: 400)
+    self.application = Application.find_by(key: params[:application_key])
   end
 end

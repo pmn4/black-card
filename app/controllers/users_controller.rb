@@ -31,6 +31,12 @@ class UsersController < ApplicationController
     render(text: 'Duplicate entry', status: 409)
   end
 
+  def subresource_destroy
+    self.model_class.find(params[:user_id])
+      .send(self.class.application_property)
+      .destroy(params[:id])
+  end
+
   protected
 
   def find_or_create_user(id_or_alias_key)
@@ -44,7 +50,7 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     user_aliases = Alias.select(:user_id).where(key: id_or_alias_key)
 
-    application.users.where(id: user_aliases).limit(1).first
+    application.users.find_by(id: user_aliases)
   end
 
   def create_user(alias_key)
