@@ -2,10 +2,6 @@ require_relative 'users_controller'
 require_relative '../models/reward'
 
 class UserReward
-  self.application_property = :rewards
-  self.resource_param = :reward
-  self.model_class = Reward
-
   attr_accessor :user, :reward
 
   def initialize(user, reward)
@@ -32,6 +28,10 @@ class UserReward
 end
 
 class UserRewardsController < UsersController
+  self.application_property = :rewards
+  self.resource_param = :reward
+  self.model_class = Reward
+
   def index
     user = find_or_create_user(params[:user_id])
     rewards = UserReward.from_array(user, application.rewards)
