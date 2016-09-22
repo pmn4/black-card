@@ -10,7 +10,7 @@ class UserReward
   end
 
   def eligible
-    [true, false].sample
+    reward.rules.all? { |r| r.satisfied?(user) }
   end
 
   def as_json(options = {})

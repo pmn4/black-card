@@ -5,6 +5,8 @@ class Action < ActiveRecord::Base
 
   def params
     JSON.parse(params_json, symbolize_keys: true)
+  rescue
+    nil
   end
 
   def serializable_hash(options = {})
