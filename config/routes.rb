@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   # admin
 
   resources :applications, only: RESOURCE_ROUTES
-  resources :rewards, only: RESOURCE_ROUTES
-  resources :rules, only: RESOURCE_ROUTES
+
+  resources :rewards, only: RESOURCE_ROUTES do
+    resources :rules, only: RESOURCE_ROUTES, controller: 'reward_rules'
+  end
 end

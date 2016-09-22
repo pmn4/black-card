@@ -1,6 +1,8 @@
 class Rule < ActiveRecord::Base
   after_initialize :init
 
+  validates :action_type, presence: true
+
   def init
     self.action_count ||= 1
   end
