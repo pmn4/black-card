@@ -14,6 +14,23 @@ class UsersController < ApplicationController
     render(text: 'User Id is required', status: 404)
   end
 
+  def subresource_create
+    user = find_user(params[:user_id])
+
+    raise ActiveRecord::RecordNotFound unless user.present?
+
+    resource = user.send(self.class.application_property)
+      .create!(resource_params)
+
+    render(json: resource.as_json)
+  rescue ActiveRecord::RecordNotFound
+    render(text: 'Not found', status: 404)
+  rescue ActiveRecord::RecordInvalid => e
+    render(json: e.record.errors, status: 400)
+  rescue ActiveRecord::RecordNotUnique => e
+    render(text: 'Duplicate entry', status: 409)
+  end
+
   protected
 
   def find_or_create_user(id_or_alias_key)

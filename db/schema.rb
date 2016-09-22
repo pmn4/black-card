@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921182255) do
+ActiveRecord::Schema.define(version: 20160922155215) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at",                   null: false
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160921182255) do
     t.text     "params_json",    limit: 65535
     t.integer  "application_id", limit: 4
     t.integer  "user_id",        limit: 4
+    t.string   "action_value",   limit: 255
   end
 
   add_index "actions", ["application_id"], name: "index_actions_on_application_id", using: :btree
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(version: 20160921182255) do
     t.integer  "application_id", limit: 4
     t.string   "action_type",    limit: 255
     t.integer  "reward_id",      limit: 4
+    t.integer  "action_count",   limit: 4
   end
 
   add_index "rules", ["application_id"], name: "index_rules_on_application_id", using: :btree
