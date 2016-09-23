@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def subresource_create
-    user = find_user(params[:user_id])
+    user = find_or_create_user(params[:user_id])
 
     raise ActiveRecord::RecordNotFound unless user.present?
 
